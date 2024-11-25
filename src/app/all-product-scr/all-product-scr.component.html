@@ -1,0 +1,85 @@
+<div class="container mt-4">
+  <div class="search-bar  mb-3 d-flex align-items-center">
+    <input
+      type="text"
+      class="form-control search-input"
+      placeholder="Search by  {{selectedOption}}"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()" 
+    />
+    <select
+    class="form-select search-option me-2"
+    [(ngModel)]="selectedOption"
+    (change)="onSearch()"
+  > <option value="productname">Product Name</option>
+    <option value="colors">Color</option>
+    <option value="size">Size</option>
+    <option value="sku">SKU</option>
+  </select>
+  </div>
+  
+
+  <div class="action-buttons mt-4">
+    <button [routerLink]="['/addproduct']" class="btn btn-primary">Add Product</button>
+    <button (click)="exportProductData()" class="btn btn-success">Export All Product List</button>
+    <button class="btn btn-secondary" (click)="fileInput.click()">Import Product List</button>
+    <input
+      type="file"
+      (change)="onFileSelected($event)"
+      accept=".xlsx, .xls"
+      #fileInput
+      style="display: none"
+    />
+  </div>
+
+  <h2 class="mt-4 text-center">Products</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th>No</th>
+          <th>Product Name</th>
+          <th>SKU</th>
+          <th>Colors</th>
+          <th>Size</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of productType; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ product.productname }}</td>
+          <td>{{ product.sku }}</td>
+          <td>{{ product.colors }}</td>
+          <td>{{ product.size }}</td>
+          <td>{{ product.description }}</td>
+          <td>
+            <button
+              class="btn detail btn-sm"
+              [routerLink]="['/edit', product.id]"
+            >
+              Detail
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination d-flex justify-content-between align-items-center mt-4">
+    <button 
+      class="btn btn-outline-primary"
+      (click)="previousPage()" 
+      [disabled]="currentPage === 1">
+      Previous
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button 
+      class="btn btn-outline-primary"
+      (click)="nextPage()" 
+      [disabled]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+</div>

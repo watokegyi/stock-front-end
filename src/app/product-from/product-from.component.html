@@ -1,0 +1,155 @@
+
+  <form [formGroup]="productForm" (ngSubmit)="saveall()">
+    <div class="button-row">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <button class="btn btn-primary" type="button" (click)="deleteall()">
+        Delete
+      </button>
+      <button class="btn btn-primary" type="button" (click)="clearForm()">
+        Cancel
+      </button>
+      <button class="btn btn-primary"  type="button"  [routerLink]="['']">List</button>
+    </div>
+
+    
+    <div class="form-grid">
+      <div class="form-column">
+        <div class="form-group">
+          <label for="product-name">Product Name:</label>
+          <input id="product-name" formControlName="productname" type="text" class="form-control  small-input" />
+        </div>
+  
+        <div class="form-group">
+          <label for="colors">Color:</label>
+          <mat-select formControlName="colors" id="colors" class="form-control small-input" multiple>
+            <mat-option *ngFor="let color of colorOptions" [value]="color">
+              {{ color }}
+            </mat-option>
+          </mat-select>
+        </div>
+  
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea formControlName="description" id="description" class="form-control  large-input"></textarea>
+        </div>
+      </div>
+  
+     
+      <div class="form-column">
+        <div class="form-group">
+          <label for="sku">SKU:</label>
+          <input id="sku" formControlName="sku" type="text" class="form-control small-input" />
+        </div>
+  
+        <div class="form-group">
+          <label for="sizes">Size:</label>
+          <mat-select formControlName="size" id="size" class="form-control  small-input" multiple>
+            <mat-option *ngFor="let size of sizeOptions" [value]="size">
+              {{ size }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+  
+
+    
+
+    <button type="button" (click)="onGenerate()" class="generate">Generate</button>
+
+
+    
+    <table class="styled-table"  *ngIf="generatedVariants.length">
+      <thead>
+        <tr>
+          <th>NO</th>
+          <th>Product Name</th>
+          <th>Image</th>
+          <th>SKU</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Color</th>
+          <th>Size</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of generatedVariants; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <input
+              type="text"
+              [value]="product.product_name"
+              (change)="onChangeProductname($event, i)"
+              class="table-input"
+            />
+          </td>
+          <td>
+            <div class="image-wrapper">
+              <button class="upload-btn"  type="button" (click)="fileInput.click()" >upload</button>
+              <img
+                [src]="
+                  product.imgurl || product.previewimage || 'assets/images/placeholder.jpg'
+                "
+                alt="Product Image"
+                class="thumbnail"
+              />
+              <input
+                type="file"
+                (change)="onFileSelect($event, i)"
+                class="upload-input"
+                #fileInput
+              />
+            </div>
+          </td>
+          <td>
+            <input
+              type="text"
+              [value]="product.sku"
+              (change)="onChangeSKU($event, i)"
+              class="table-input"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              [value]="product.quantity"
+              (change)="onChangeQuantity($event, i)"
+              class="table-input"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              [value]="product.price"
+              (change)="onChangePrice($event, i)"
+              class="table-input"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              [value]="product.color"
+              (change)="onChangeColor($event, i)"
+              class="table-input"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              [value]="product.size"
+              (change)="onChangeSize($event, i)"
+              class="table-input"
+            />
+          </td>
+          <td>
+            <button class="btn-delete" (click)="deleteprouct(i)" type="button">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </form>
+
+ 
+

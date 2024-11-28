@@ -8,6 +8,7 @@ import {
   ProductVariant,
  
 } from '../models/product.model';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-product-from',
@@ -83,9 +84,46 @@ export class ProductFromComponent implements OnInit {
     });
   }
 
-  saveall() {
-    this.createOrupdateProductKproduct();
+ 
+
+  saveall(){ 
+    this.validateVariants();
+  const hasErrors = this.generatedVariants.some(variant => variant.errors && variant.errors.length > 0);
+  if (hasErrors && this.generatedVariants.length>0) {
+    alert('Please filled nessary Product attribute');
+    return;
   }
+  this.createOrupdateProductKproduct();
+  }
+
+  validateVariants(): void {
+    this.generatedVariants.forEach((variant, index) => {
+      const errors: string[] = [];
+      if (variant.product_name.trim() === '') {
+        errors.push('Productname');
+      }
+      if (variant.sku.trim() === '') {
+        errors.push('SKU');
+      }
+      if (variant.color.trim() === '') {
+        errors.push('Color');
+      } 
+      if (!variant.quantity  || variant.quantity <= 0){
+        errors.push('Qty');
+      }
+      if(!variant.imgurl || variant.imgurl.trim()===''){
+        errors.push('Img')
+      }
+      if(!variant.price || variant.price <=0){
+        errors.push('Price');
+      }
+      if(variant.size.trim()===''){
+        errors.push('Size');
+      }
+      this.generatedVariants[index].errors = errors.length > 0 ? errors : undefined;
+    });
+  }
+  
 
   onFileSelect(event: Event, index: number) {
     const input = event.target as HTMLInputElement;
@@ -177,11 +215,10 @@ export class ProductFromComponent implements OnInit {
   }
 
   clearForm() {
+    this.generatedVariants = [];
     if (this.isEditMode) {
-      this.generatedVariants = [];
       this.loadProductData(this.id);
     } else {
-      this.generatedVariants = [];
       this.router.navigate(['']);
     }
   }

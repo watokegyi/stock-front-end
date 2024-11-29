@@ -151,47 +151,27 @@ export class ProductFromComponent implements OnInit {
     }
   }
 
-  onChangeProductname(event: Event, index: number): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement) {
-      this.generatedVariants[index].product_name = inputElement.value;
-    }
-  }
 
-  onChangeSKU(event: Event, index: number): void {
+ 
+  onChangeField<T extends keyof ProductVariant>(
+    event: Event,
+    index: number,
+    fieldName: T
+  ): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement) {
-      this.generatedVariants[index].sku = inputElement.value;
+      let value: any = inputElement.value;
+  
+      
+      if (fieldName === 'quantity' || fieldName === 'price') {
+        value = parseFloat(value);
+      }
+  
+      this.generatedVariants[index][fieldName] = value as ProductVariant[T];
     }
   }
-
-  onChangeColor(event: Event, index: number): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement) {
-      this.generatedVariants[index].color = inputElement.value;
-    }
-  }
-
-  onChangeSize(event: Event, index: number): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement) {
-      this.generatedVariants[index].size = inputElement.value;
-    }
-  }
-
-  onChangeQuantity(event: Event, index: number): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement) {
-      this.generatedVariants[index].quantity = parseFloat(inputElement.value);
-    }
-  }
-
-  onChangePrice(event: Event, index: number): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement) {
-      this.generatedVariants[index].price = parseFloat(inputElement.value);
-    }
-  }
+  
+  
 
   
   deleteprouct(index: any) {

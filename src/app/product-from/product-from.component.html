@@ -76,12 +76,13 @@
       <tr *ngFor="let product of generatedVariants; let i = index">
         <td>{{ i + 1 }}</td>
         <td>
-          <input
-            type="text"
-            [value]="product.product_name"
-            (change)="onChangeProductname($event, i)"
-            class="table-input"
-          /> <div *ngIf="product.errors?.includes('Productname')">
+  <input
+  type="text"
+  (change)="onChangeField($event, i, 'product_name')"
+  [value]="product.product_name"
+  class="table-input"
+/>
+           <div *ngIf="product.errors?.includes('Productname')">
             <small class="text-danger">Product name is required.</small>
           </div>
         </td>
@@ -107,55 +108,58 @@
           </div>
         </td>
         <td>
+         
           <input
-            type="text"
-            [value]="product.sku"
-            (change)="onChangeSKU($event, i)"
-            class="table-input"
-          />
+  type="text"
+  (change)="onChangeField($event, i,'sku')"
+  [value]="product.sku"
+  class="table-input"
+/>
           <div *ngIf="product.errors?.includes('SKU')">
             <small class="text-danger">SKU is required.</small>
           </div>
         </td>
         <td>
           <input
-            type="number"
-            [value]="product.quantity"
-            (change)="onChangeQuantity($event, i)"
-            class="table-input"
-          /><div *ngIf="product.errors?.includes('Qty')">
+          type="number"
+          (change)="onChangeField($event, i,'quantity')"
+          [value]="product.quantity"
+          class="table-input"
+        />
+          <div *ngIf="product.errors?.includes('Qty')">
             <small class="text-danger">Quantity is required.</small>
           </div>
         </td>
         <td>
           <input
-            type="number"
-            [value]="product.price"
-            (change)="onChangePrice($event, i)"
-            class="table-input"
-          />
+  type="number"
+  (change)="onChangeField($event, i,'price')"
+  [value]="product.price"
+  class="table-input"
+/>
           <div *ngIf="product.errors?.includes('Price')">
             <small class="text-danger">Price is not setted.</small>
           </div>
         </td>
         <td>
+         
           <input
-            type="text"
-            [value]="product.color"
-            (change)="onChangeColor($event, i)"
-            class="table-input"
-          />
+  type="text"
+  (change)="onChangeField($event, i,'color')"
+  [value]="product.color"
+  class="table-input"
+/>
           <div *ngIf="product.errors?.includes('Color')">
             <small class="text-danger">Color is required.</small>
           </div>
         </td>
         <td>
           <input
-            type="text"
-            [value]="product.size"
-            (change)="onChangeSize($event, i)"
-            class="table-input"
-          />
+  type="text"
+  (change)="onChangeField($event, i, 'size')"
+  [value]="product.size"
+  class="table-input"
+/>
           <div *ngIf="product.errors?.includes('Size')">
             <small class="text-danger">Size is required.</small>
           </div>
